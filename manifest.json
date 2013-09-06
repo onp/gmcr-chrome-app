@@ -1,0 +1,15 @@
+{
+    "name":"GMCR",
+    "description":"Decision Support System implementing the Graph Model for Conflict Resolution",
+    "version": "0.1",
+    "manifest_version":2,
+    "app":{
+        "background":{
+            "scripts":["background.js"]
+        }
+    },
+    "icons":{
+        "16":"images/app_icons/calculator-16.png",
+        "128":"images/app_icons/calculator-128.png"
+    }
+}   

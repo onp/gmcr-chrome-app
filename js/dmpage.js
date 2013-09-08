@@ -1,4 +1,4 @@
-var dmPageScript = function(){
+$(function(){
 	$("div.sidebar ul").children().hover(
 		function(){
 		$(this).css("background-color","darkGray")
@@ -13,6 +13,11 @@ var dmPageScript = function(){
 	Mustache.compilePartial("dmTemplate",templates.dmTemplate)
 	Mustache.compilePartial("optionTemplate",templates.optionTemplate)
     
+    var notify = function(message){
+        $("<div class='notification' >"+message+"</div>").appendTo("div.container")
+                 .fadeIn().delay(2000).fadeOut(function(){ $(this).remove(); });
+    }
+    
 	var iconList = {icons:[	"question_mark.png",
                             "briefcase.png",
 							"dam.png",
@@ -22,17 +27,21 @@ var dmPageScript = function(){
 							"water.png",
 	]};	
     
+    var $sortTargetHack = "none";
+    
     function OptionObj(conflict,optionData){
-        if (typeof optionData === "undefined"){
-            optionData = {name:	"new option",
-                          image:    iconList.icons[0],  
-                          reversible: "Reversible"};
-        };
         var _conf = conflict;
         var _opt = this;
-        this.name = optionData.name;
-        this.image = optionData.image;
-        this.reversible = optionData.reversible;
+        
+        if (typeof optionData === "undefined"){
+            this.name = "New Option";
+            this.image = iconList.icons[0];
+            this.reversible = "Reversible";
+        }else{
+            this.name = optionData.name;
+            this.image = optionData.image;
+            this.reversible = optionData.reversible;
+        };
         this.views = [];
         
         this.toJSON = function(){
@@ -43,26 +52,32 @@ var dmPageScript = function(){
             $.each(this.views,function(i){
                 this.find('.rev').val(_opt.reversible);
                 this.find('.optName').val(_opt.name);
-                this.children('.icon').attr("src","/static/gmConflicts/images/option_icons/" + _opt.image);
+                this.children('.icon').attr("src","/images/option_icons/" + _opt.image);
             });
         };
         
         this.renderOption = function(dm){
+            //returns a jquery object containing the rendered option, established the appropriate references and handlers.
             var $newView = $(optMaker(_opt));
             $newView.data("dm", dm);
             $newView.data("option",_opt);
             $newView.data("conflict",_conf);
             $newView.on('remove',function(){
                 _opt.views.splice(_opt.views.indexOf($newView),1);
-
-                $newView.dm.options.splice($newView.dm.options.indexOf(_opt),1);
+                console.log($newView.data("conflict"));
+                dm.options.splice($newView.data("dm").options.indexOf(_opt),1);
                 if (_opt.views.length==1){
                     _opt.views[0].addClass("unused")
-                        .find("span").html("Unused");
+                        .find("span").html("Type: unused");
+                }else if(_opt.views.length==2){
+                    $.each(_opt.views,function(){
+                            $(this).find("span").html("Type: unique");
+                    });
                 }else if (_opt.views.length==0){
                     _conf.options.splice(_conf.options.indexOf(_opt),1);
                 };
             });
+            //keep all copies of the option synced.
             $newView.find('.rev').val(this.reversible).change(function(){
                 _opt.reversible = $(this).val();
                 _opt.updateViews();
@@ -77,6 +92,20 @@ var dmPageScript = function(){
                 _opt.updateViews();
             });
             this.views.push($newView);
+            if (_opt.views.length==1){
+                _opt.views[0].addClass("unused")
+                    .find("span").html("Type: unused");
+            }else if(_opt.views.length==2){
+                $.each(_opt.views,function(){
+                        $(this).removeClass("unused")
+                               .find("span").html("Type: unique");
+                });
+            }else if(_opt.views.length>2){
+                $.each(_opt.views,function(){
+                        $(this).removeClass("unused")
+                               .find("span").html("Type: shared");
+                });
+            }
             return $newView
         }
     }
@@ -106,9 +135,9 @@ var dmPageScript = function(){
             });
             
             $dm.find("li.addOpt").on("click",function(){		//activate "add Option" button
-                newOpt = _conf.newOption();
+                newOpt = _conf.newOption(_dm);
                 _dm.options.push(newOpt);
-                $(this).before(newOpt.renderOption());
+                $(this).before(newOpt.renderOption(_dm));
             });
             
             return $dm;
@@ -119,30 +148,35 @@ var dmPageScript = function(){
                     "options":$.map(_dm.options,function(opt){return opt.index})
             };
         };
-    
-    
     }
     
     function ConflictObj(conflict){
         var _conf = this
-        this.options = $.map(conflict.options,function(opt){
-            return new OptionObj(_conf,opt);
-        });
-         
-        this.decisionMakers = $.map(conflict.decisionMakers,function(dmData){
-            return new DMObj(_conf,dmData);
-        });
         
-        this.title = conflict.title;
-        $("input.confName").change(function(){
-            _conf.title = $(this).val();
-        });
-        this.description = conflict.description;
-        $("textarea.confDesc").change(function(){
-            _conf.description = $(this).val();
-        });
+        //generate conflict model from json.
+        if (typeof(conflict) == "undefined"){
+            this.title = "New Conflict";
+            this.options = [new OptionObj(_conf)];
+            this.decisionMakers = [new DMObj(_conf)];
+        }else{
+            this.options = $.map(conflict.options,function(opt){
+                return new OptionObj(_conf,opt);
+            });
+             
+            this.decisionMakers = $.map(conflict.decisionMakers,function(dmData){
+                return new DMObj(_conf,dmData);
+            });
+            
+            this.title = conflict.title;
+            this.description = conflict.description;
+        }
+
+        //Keep title and description synced to model
+        $("input.confName").change(function(){     _conf.title = $(this).val();      });
+        $("textarea.confDesc").change(function(){  _conf.description = $(this).val();});
         
         this.renderDMlist = function(){
+            //returns a jquery object containing a rendered DMList.
             $dmList = $(dmListMaker(_conf));
             $.each(this.decisionMakers,function(){
                 $dmList.append(this.renderDM());
@@ -151,13 +185,30 @@ var dmPageScript = function(){
                     .on("click",function(){		        //activate "add DM" button
                         newDM = _conf.newDecisionMaker()
                         $(this).before(newDM.renderDM());
-                        $("ul.dmOptions").sortable({connectWith: "ul.dmOptions",
-                                            items:"> li:not(.addOpt)"});	
+                        $("ul.dmOptions").sortable({
+                            connectWith: "ul.dmOptions",
+                            items:"> li:not(.addOpt)",
+                            beforeStop: function(event,ui){
+                                $sortTargetHack = ui.item;
+                            },
+                            receive: function(event,ui){
+                                var newDM = $(this).parents("form.dmForm").data("dm")
+                                if (newDM.options.indexOf(ui.item.data("option"))!=-1){
+                                  $sortTargetHack.remove();
+                                  notify("A decision maker my not have duplicate options");
+                                }else{
+                                var $copy = ui.item.data("option").renderOption(newDM);
+                                newDM.options.push(ui.item.data("option"));
+                                $sortTargetHack.replaceWith($copy);
+                                };
+                            }
+                        });	
                     });
             return $dmList;
         };
         
         this.renderOptionList = function(){
+            //returns a jquery object containing a rendered optionlist.
             $optionList = $("<div class='optBank'>");
             $.each(this.options,function(){
                 $optionList.append(this.renderOption());
@@ -170,9 +221,15 @@ var dmPageScript = function(){
             return $optionList;
         };
             
-        this.newOption = function(){
+        this.newOption = function(dm){
             var newOpt = new OptionObj(_conf);
-            $("div.optBank").append(newOpt.renderOption())
+            $newOptElem = newOpt.renderOption(dm);
+            $("div.optBank").append($newOptElem);
+            $newOptElem.draggable({
+                revert:"invalid",
+                helper:"clone",
+                connectToSortable:"ul.dmOptions" 
+            });
             this.options.push(newOpt);
             return newOpt;
         }
@@ -192,16 +249,29 @@ var dmPageScript = function(){
     
     };
     
-    var conflict = new ConflictObj(conflictData);
+    var conflict = new ConflictObj();
       
     $("div.dmList").append(conflict.renderDMlist());    //insert the conflict into the page
     $("div.optList").append(conflict.renderOptionList());
     $("ul.dmOptions").sortable({connectWith: "ul.dmOptions",
-                                items:"> li:not(.addOpt)"});		
+                                items:"> li:not(.addOpt)",
+                                beforeStop: function(event,ui){
+                                    $sortTargetHack = ui.item;
+                                },
+                                receive: function(event,ui){
+                                    var newDM = $(this).parents("form.dmForm").data("dm")
+                                    if (newDM.options.indexOf(ui.item.data("option"))!=-1){
+                                      $sortTargetHack.remove();
+                                      notify("A decision maker my not have duplicate options");
+                                    }else{
+                                    var $copy = ui.item.data("option").renderOption(newDM);
+                                    newDM.options.push(ui.item.data("option"));
+                                    $sortTargetHack.replaceWith($copy);
+                                    };
+                                }
+    });	
     $("ul.dmList").sortable({connectWith: "ul.dmList",
                              items:"> form:not(.addDM)"});		//make lists sortable
-    
-	
 							 
 	$("div.dmList").on("sortreceive","ul.dmOptions",function(){
 		$(this).find("li.addOpt").appendTo(this);
@@ -250,7 +320,7 @@ var dmPageScript = function(){
                 };
             });
     });
-};
+});
 
 
 

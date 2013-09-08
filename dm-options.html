@@ -10,22 +10,18 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
 	
-    <script src="js-lib/jquery-1.9.1.min.js"></script>
-    <script src="js-lib/jquery-ui-1.10.3.min.js"></script>
-    <script src="js-lib/jquery.ui.touch-punch.min.js"></script>
-	<script src="js-lib/mustache.min.js"></script>
+    <script src="/js-lib/jquery-2.0.3.min.js"></script>
+    <script src="/js-lib/jquery-ui-1.10.3.min.js"></script>
+    <script src="/js-lib/jquery.ui.touch-punch.min.js"></script>
+	<script src="/js-lib/mustache.min.js"></script>
 	
-	<script type="text/javascript" src="{% static 'gmConflicts/mTemps.js' %}"></script>
-	<script type="text/javascript" src="{% static 'gmConflicts/js/dmPage.js' %}"></script>
+	<script type="text/javascript" src="/js/mTemps.js"></script>
+	<script type="text/javascript" src="/js/dmPage.js"></script>
     
     <link rel="stylesheet" type="text/css" href="styles/normalize.css" />
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/start/jquery-ui.css"  />
+    <link rel="stylesheet" href="/styles/jquery-ui-1.10.3.custom.min.css"  />
     <link rel="stylesheet" type="text/css" href="styles/styles.css" />
 	
-<script type="text/javascript">
-var conflictData = {{ conf.json_rep |safe}};
-$(dmPageScript);
-</script>
 </head>
 
 <body>
@@ -35,8 +31,8 @@ $(dmPageScript);
         <p class="appName">GMCR<br>DSS</p>
         
         <form class="confInfo">
-            <textarea name="confDesc" class="confDesc">{{conf.description}}</textarea>
-            <input type="text" name="confName" value="{{ conf.title }}" class="confName"></input>
+            <textarea name="confDesc" class="confDesc" placeholder="Enter a description"></textarea>
+            <input type="text" name="confName" placeholder="Enter a title" class="confName"></input>
             <p id=saveButton>Save Conflict</p>
         </form>
     </div>

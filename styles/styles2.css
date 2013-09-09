@@ -1,0 +1,337 @@
+div.container{
+    width:100%;
+	max-width:900px;
+	position:relative;
+	margin:0 auto;
+}
+
+ul{margin:0;padding:0}
+li{margin:0;padding:0;list-style:none;}
+p{margin:0;padding:0}
+div{margin:0;padding:0}
+
+div.topbar{
+	position:relative;
+    min-width:750px;
+	width:100%;
+	right:5px;
+	border-bottom:2px solid gray;
+    overflow:auto;
+}
+
+div.topbar p.appName{
+	border-left:2px solid gray;
+	padding:0px 5px;
+	text-align:right;
+	float:right;
+	font-size:40px;
+    line-height:1;
+	font-weight:bold;
+    height:100px;
+    vertical-align:middle;
+}
+
+div.notification{
+    position:fixed;
+    width:250px;
+    top:5px;
+    left:50%;
+    margin:0px 0px 0px -125px;
+    background-color:red;
+    font-size:15px;
+    text-align:center;
+    display:none;
+}
+
+form.confInfo{
+    padding:5px;
+    margin-bottom:5px;
+    box-sizing:border-box;
+}
+
+input.confName{
+    display:block;
+	font-size:25px;
+	padding:8px 4px;
+    background-color:transparent;
+    border:solid 1px transparent;
+}
+
+input.confName:hover{
+    border:solid 1px black;
+}
+
+input.confName:focus{
+    background-color:white;
+}
+
+p#saveButton{
+    background-color:pink;
+    width:200px;
+    padding:5px;
+    margin:5px;
+    text-align:center;
+}
+
+textarea.confDesc{
+    box-sizing:border-box;
+    float:right;
+    width:300px;
+    resize:none;
+    margin:5px;
+    background-color:transparent;
+    border:solid 1px transparent;
+}
+
+textarea.confDesc:focus{
+    background-color:white;
+}
+
+textarea.confDesc:hover{
+    border:solid 1px black;
+}
+
+div.sidebar{
+	position:absolute;
+    width:150px;
+	top:110px;
+}
+
+div.sidebar ul{
+	margin:0;
+	padding:0;
+}
+
+div.sidebar li{
+	position:relative;
+	display:block;
+	height:32px;
+	width:150px;
+	list-style:none;
+	background-color:gray;
+	box-sizing:border-box;
+	border-top:1px solid black;
+	border-bottom:1px solid lightGray;
+	border-right:1px solid black;
+}
+
+div.sidebar li ul{
+	display:none;
+	position:absolute;
+	left:150px;
+	top:-1px;
+}
+
+div.sidebar li p{
+	margin:0;
+	padding:4px 12px;
+}		
+
+div.mainContent{
+    margin: 5px 10px 10px 155px;
+    padding:5px;
+	background-color:darkTurquoise;
+	min-height:500px;
+}
+
+ul.confList,
+div.dmList{
+    min-width:325px;
+    float:left;
+}
+
+
+li.conflictBox,
+form.dmForm{
+	position:relative;
+	margin-bottom:10px;
+	border:2px solid black;
+	width:100%;
+	min-height:100px;
+	background-color:lightBlue;
+    box-sizing:border-box;
+}
+
+a.addConflict,
+li.addDM {
+	position:relative;
+    box-sizing:border-box;
+	margin:0px;
+	margin-bottom:5px;
+	border:1px solid black;
+	width:100%;
+	height:32px;
+	padding:2px 1px;
+	background-color:deepskyblue;
+	text-align:center;
+	font-size:20px;
+    line-height:1;
+}
+
+a.addConflict{
+	display:block;
+	color:black;
+}
+
+a.addConflict:hover,
+li.addDM:hover {
+	border:2px black solid;
+	padding:1px 0px;
+}
+
+a.confLink,
+form.dmForm input.dmName{
+	position:relative;
+	margin:5px;
+	width:70%;
+	font-size:20px;
+	color:red;
+	padding:8px 4px;
+}
+
+a.confLink{
+	color:black;
+}
+
+div.optList{
+    border:2px black solid;
+    background-color:lightBlue;
+    float:right;
+}
+
+p.optList-title{
+    font-size:20px;
+    text-align:center;
+}
+
+div.optBank,
+form.dmForm ul.dmOptions{
+	margin:5px;
+	padding:5px;
+	padding-bottom:1px;
+	position:relative;
+	width:300px;
+	background-color:beige;
+}
+
+div.optBank{
+    padding-top:5px;
+    float:right;
+}
+
+li.option {
+	height:60px;
+	width:300px;
+	margin-bottom:5px;
+	background-color:lightGreen;
+	position:relative;
+}
+
+li.addOpt {
+	height:18px;
+	width:288px;
+	padding:5px;
+	margin-bottom:5px;
+	background-color:limeGreen;
+	border:1px limeGreen solid;
+	position:relative;
+	text-align:center;
+}
+
+li.addOpt:hover {
+	border:1px black solid;
+}
+
+li.option img.icon{
+	position:relative;
+	height:40px;
+	width:40px;
+	border:2px solid black;
+	border-radius:10px;
+	margin:7px;
+	background-color:gold;
+}
+
+li.option img.icon:hover{
+	border:3px solid black;
+	margin:6px;
+}
+
+li.option input.optName{
+	position: absolute;
+	background-color:transparent;
+	border:1px solid transparent;
+	margin:5px;
+	font-weight:bold;
+	font-size:16px;
+}
+
+li.option input.optName:hover{
+	border:1px solid black;
+}
+
+li.option input.optName:focus{
+	background-color:white;
+}
+
+li.option div.optDetails{
+	position:absolute;
+	margin:5px;
+	bottom:0;
+	left:56px;
+}
+
+img.cornerX{
+	position:absolute;
+	right:4px;
+	top:3px;
+	height:14px;
+	width:14px;
+	padding:1px;
+	border-radius:9px;
+}
+
+img.cornerX:hover{
+	border:1px solid black;
+	padding:0px;
+}
+
+div.iconPicker{
+	padding:3.5px;
+	background-color:red;
+	width:147px;
+	position:absolute;
+	left:0px;
+	top:0px;
+	z-index:1;
+}
+
+img.iconPicker{
+	position:relative;
+	float:left;
+	height:40px;
+	width:40px;
+	border:2px solid black;
+	margin:2.5px;
+	border-radius:10px;
+	background-color:gold;
+}
+
+img.iconPicker:hover{
+	border:3px solid black;
+	margin:1.5px;
+}
+
+p.confDescription{
+	background-color:white;
+	margin:5px;
+}
+
+p.pub_date{
+	margin:5px;
+	float:right;
+}
+
+li.unused{
+    background-color:pink;
+}

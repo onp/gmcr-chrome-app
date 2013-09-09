@@ -1,7 +1,43 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>GMCR DSS</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        <script src="/js-lib/jquery-2.0.3.min.js"></script>
+        <script src="/js-lib/jquery-ui-1.10.3.min.js"></script>
+        <script src="/js-lib/jquery.ui.touch-punch.min.js"></script>
+        <script src="/js-lib/mustache.min.js"></script>
+        
+        <script type="text/javascript" src="/js/mTemps.js"></script>
+        <script type="text/javascript" src="/js/mainWindow.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="styles/normalize.css" />
+        <link rel="stylesheet" href="/styles/jquery-ui-1.10.3.custom.min.css"  />
+        <link rel="stylesheet" type="text/css" href="styles/styles.css" />
+        
+    </head>
+
     <body>
-        <div> Hello GMCR!</div>
+        <div class="container">
+            <div id="topbar">
+                <p id="topbar-appName">GMCR<br>DSS</p>
+                
+                <div id="topbar-content"></div>
+            </div>
+        </div>
+        <div class="sidebar2">
+            <div class="sidebar-title">Menu</div>
+            <img class="sidebar-icon" src="/images/menu.png"/>
+            <ul class="sidebar-list">
+                <li><p id="button-save">Save Conflict</p></li>
+                <li><p id="button-saveAs">Save Conflict As...</p></li>
+                <li><p id="button-load">Load Conflict</p></li>
+                <li><p id="button-new">New Conflict</p></li>
+            </ul>
+        </div>
     </body>
 </html>

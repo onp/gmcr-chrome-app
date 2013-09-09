@@ -1,8 +1,7 @@
 div.container{
     width:100%;
-	max-width:900px;
-	position:relative;
-	margin:0 auto;
+    height:100%;
+	padding:0px 10px 10px 20px;
 }
 
 ul{margin:0;padding:0}
@@ -43,58 +42,58 @@ div.notification{
     display:none;
 }
 
-form.confInfo{
-    padding:5px;
-    margin-bottom:5px;
-    box-sizing:border-box;
-}
-
-input.confName{
-    display:block;
-	font-size:25px;
-	padding:8px 4px;
-    background-color:transparent;
-    border:solid 1px transparent;
-}
-
-input.confName:hover{
-    border:solid 1px black;
-}
-
-input.confName:focus{
-    background-color:white;
-}
-
-p#saveButton{
-    background-color:pink;
-    width:200px;
-    padding:5px;
-    margin:5px;
-    text-align:center;
-}
-
-textarea.confDesc{
-    box-sizing:border-box;
-    float:right;
-    width:300px;
-    resize:none;
-    margin:5px;
-    background-color:transparent;
-    border:solid 1px transparent;
-}
-
-textarea.confDesc:focus{
-    background-color:white;
-}
-
-textarea.confDesc:hover{
-    border:solid 1px black;
-}
-
 div.sidebar{
 	position:absolute;
     width:150px;
 	top:110px;
+}
+
+div.sidebar2{
+    position:fixed;
+    width:200px;
+    height:100%;
+    background-color:darkGrey;
+    top:0px;
+    left:-180px;
+    transition:left 1s;
+}
+
+div.sidebar2:hover{
+    left:0px;
+}
+
+div.sidebar2 div.sidebar-title{
+    margin:0px 10px;
+    font-size:18px;
+}
+
+div.sidebar2 img.sidebar-icon{
+    position:absolute;
+    right:0px;
+    top:0px;
+    width:20px;
+    height:20px;
+}
+
+div.sidebar2 ul.sidebar-list{
+    width:100%;
+    padding-top:10px;
+}
+
+div.sidebar2 li{
+    margin:0px 20px 5px 20px;
+}    
+
+div.sidebar2 p{
+    text-align:center;
+    padding:5px;
+    width:100%;
+    box-sizing:border-box;
+    background-color:ivory;
+}
+
+p#button-save{
+    background-color:lightGreen;
 }
 
 div.sidebar ul{
@@ -133,6 +132,47 @@ div.mainContent{
 	background-color:darkTurquoise;
 	min-height:500px;
 }
+form.confInfo{
+    padding:5px;
+    margin-bottom:5px;
+    box-sizing:border-box;
+}
+
+input.confName{
+    display:block;
+	font-size:25px;
+	padding:8px 4px;
+    background-color:transparent;
+    border:solid 1px transparent;
+}
+
+input.confName:hover{
+    border:solid 1px black;
+}
+
+input.confName:focus{
+    background-color:white;
+}
+
+textarea.confDesc{
+    box-sizing:border-box;
+    float:right;
+    width:300px;
+    resize:none;
+    margin:5px;
+    background-color:transparent;
+    border:solid 1px transparent;
+}
+
+textarea.confDesc:focus{
+    background-color:white;
+}
+
+textarea.confDesc:hover{
+    border:solid 1px black;
+}
+
+
 
 ul.confList,
 div.dmList{

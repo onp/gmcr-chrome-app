@@ -1,7 +1,6 @@
-div.container{
-    width:100%;
+div#container{
     height:100%;
-	padding:0px 10px 10px 20px;
+	margin:0px 10px 10px 20px;
 }
 
 ul{margin:0;padding:0}
@@ -9,25 +8,31 @@ li{margin:0;padding:0;list-style:none;}
 p{margin:0;padding:0}
 div{margin:0;padding:0}
 
-div.topbar{
-	position:relative;
+div#topbar{
+    width:100%;
     min-width:750px;
-	width:100%;
-	right:5px;
+    padding:0px 3px;
 	border-bottom:2px solid gray;
-    overflow:auto;
+    overflow:hidden;
 }
 
-div.topbar p.appName{
+div#topbar-content{
+    margin-right:125px;
+    height:100px;
+}
+
+span#topbar-appName{
+    position:absolute;
+    top:0px;
+    right:0px;
+    height:80px;
+    width:115px;
 	border-left:2px solid gray;
-	padding:0px 5px;
+	padding:10px 5px;
 	text-align:right;
-	float:right;
 	font-size:40px;
     line-height:1;
 	font-weight:bold;
-    height:100px;
-    vertical-align:middle;
 }
 
 div.notification{
@@ -42,13 +47,7 @@ div.notification{
     display:none;
 }
 
-div.sidebar{
-	position:absolute;
-    width:150px;
-	top:110px;
-}
-
-div.sidebar2{
+div#sidebar{
     position:fixed;
     width:200px;
     height:100%;
@@ -58,16 +57,16 @@ div.sidebar2{
     transition:left 1s;
 }
 
-div.sidebar2:hover{
+div#sidebar:hover{
     left:0px;
 }
 
-div.sidebar2 div.sidebar-title{
-    margin:0px 10px;
+div#sidebar div.sidebar-title{
+    margin:0px 20px;
     font-size:18px;
 }
 
-div.sidebar2 img.sidebar-icon{
+div#sidebar img.sidebar-icon{
     position:absolute;
     right:0px;
     top:0px;
@@ -75,16 +74,16 @@ div.sidebar2 img.sidebar-icon{
     height:20px;
 }
 
-div.sidebar2 ul.sidebar-list{
+div#sidebar ul.sidebar-list{
     width:100%;
     padding-top:10px;
 }
 
-div.sidebar2 li{
+div#sidebar li{
     margin:0px 20px 5px 20px;
 }    
 
-div.sidebar2 p{
+div#sidebar p.sidebar-button{
     text-align:center;
     padding:5px;
     width:100%;
@@ -92,39 +91,16 @@ div.sidebar2 p{
     background-color:ivory;
 }
 
-p#button-save{
+div#sidebar p.sidebar-button:hover{
+    padding:4px;
+    border:1px solid black;
+}
+
+div#sidebar p#button-save{
     background-color:lightGreen;
 }
 
-div.sidebar ul{
-	margin:0;
-	padding:0;
-}
 
-div.sidebar li{
-	position:relative;
-	display:block;
-	height:32px;
-	width:150px;
-	list-style:none;
-	background-color:gray;
-	box-sizing:border-box;
-	border-top:1px solid black;
-	border-bottom:1px solid lightGray;
-	border-right:1px solid black;
-}
-
-div.sidebar li ul{
-	display:none;
-	position:absolute;
-	left:150px;
-	top:-1px;
-}
-
-div.sidebar li p{
-	margin:0;
-	padding:4px 12px;
-}		
 
 div.mainContent{
     margin: 5px 10px 10px 155px;

@@ -22,21 +22,26 @@
     </head>
 
     <body>
-        <div class="container">
+        <div id="container">
             <div id="topbar">
-                <p id="topbar-appName">GMCR<br>DSS</p>
-                
                 <div id="topbar-content"></div>
+                <span id="topbar-appName">GMCR<br>DSS</span>
+            </div>
+            <div id="content">
+                <h1>Welcome to the GMCR App.</h1>
+                <p>Load a conflict using the menu at left</p>
             </div>
         </div>
-        <div class="sidebar2">
+        
+        
+        <div id="sidebar">
             <div class="sidebar-title">Menu</div>
             <img class="sidebar-icon" src="/images/menu.png"/>
             <ul class="sidebar-list">
-                <li><p id="button-save">Save Conflict</p></li>
-                <li><p id="button-saveAs">Save Conflict As...</p></li>
-                <li><p id="button-load">Load Conflict</p></li>
-                <li><p id="button-new">New Conflict</p></li>
+                <li><p id="button-save" class="sidebar-button">Save Conflict</p></li>
+                <li><p id="button-saveAs" class="sidebar-button">Save Conflict As...</p></li>
+                <li><p id="button-load" class="sidebar-button">Load Conflict</p></li>
+                <li><p id="button-new" class="sidebar-button">New Conflict</p></li>
             </ul>
         </div>
     </body>

@@ -108,6 +108,40 @@ div.mainContent{
 	background-color:darkTurquoise;
 	min-height:500px;
 }
+
+div#welcome{
+    margin-left:20px;
+}
+
+div#welcome h1{
+    text-align:center;
+}
+
+div#welcome div.welcome-button{
+    float:left;
+    width:200px;
+    height:150px;
+    background-color:blue;
+    margin:10px;
+    font-size:20px;
+    text-align:center;
+    line-height:7;
+    padding:1px;
+}
+
+div#welcome div.welcome-button:hover{
+    padding:0px;
+    border:1px solid black;
+}
+
+div#welcome div#welcome-load{
+    background-color:lightBlue;
+}
+
+div#welcome div#welcome-new{
+    background-color:yellow;
+}
+
 form.confInfo{
     padding:5px;
     margin-bottom:5px;

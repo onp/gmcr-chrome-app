@@ -1,6 +1,10 @@
+html{
+    overflow-y:scroll;
+}
+
 div#container{
     height:100%;
-	margin:0px 10px 10px 20px;
+	margin:0px 0px 10px 20px;
 }
 
 ul{margin:0;padding:0}
@@ -100,15 +104,6 @@ div#sidebar p#button-save{
     background-color:lightGreen;
 }
 
-
-
-div.mainContent{
-    margin: 5px 10px 10px 155px;
-    padding:5px;
-	background-color:darkTurquoise;
-	min-height:500px;
-}
-
 div#welcome{
     margin-left:20px;
 }
@@ -142,14 +137,16 @@ div#welcome div#welcome-new{
     background-color:yellow;
 }
 
-form.confInfo{
+div#dm-editor{
+    margin: 5px 10px 10px 10px;
     padding:5px;
-    margin-bottom:5px;
-    box-sizing:border-box;
+	background-color:darkTurquoise;
+	min-height:500px;
 }
 
 input.confName{
-    display:block;
+    position:absolute;
+    bottom:5px;
 	font-size:25px;
 	padding:8px 4px;
     background-color:transparent;
@@ -166,8 +163,8 @@ input.confName:focus{
 
 textarea.confDesc{
     box-sizing:border-box;
-    float:right;
     width:300px;
+    height:90px;
     resize:none;
     margin:5px;
     background-color:transparent;
@@ -182,16 +179,11 @@ textarea.confDesc:hover{
     border:solid 1px black;
 }
 
-
-
-ul.confList,
 div.dmList{
     min-width:325px;
     float:left;
 }
 
-
-li.conflictBox,
 form.dmForm{
 	position:relative;
 	margin-bottom:10px;
@@ -202,7 +194,6 @@ form.dmForm{
     box-sizing:border-box;
 }
 
-a.addConflict,
 li.addDM {
 	position:relative;
     box-sizing:border-box;
@@ -275,6 +266,10 @@ li.option {
 	margin-bottom:5px;
 	background-color:lightGreen;
 	position:relative;
+}
+
+li.option.unused{
+    background-color:pink;
 }
 
 li.addOpt {
@@ -370,18 +365,4 @@ img.iconPicker{
 img.iconPicker:hover{
 	border:3px solid black;
 	margin:1.5px;
-}
-
-p.confDescription{
-	background-color:white;
-	margin:5px;
-}
-
-p.pub_date{
-	margin:5px;
-	float:right;
-}
-
-li.unused{
-    background-color:pink;
 }

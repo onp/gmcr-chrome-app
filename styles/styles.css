@@ -21,6 +21,7 @@ div#topbar{
 }
 
 div#topbar-content{
+    position:relative;
     margin-right:125px;
     height:100px;
 }
@@ -116,7 +117,7 @@ div#welcome div.welcome-button{
     float:left;
     width:200px;
     height:150px;
-    background-color:blue;
+    background-color:lightBlue;
     margin:10px;
     font-size:20px;
     text-align:center;
@@ -145,8 +146,9 @@ div#dm-editor{
 }
 
 input.confName{
-    position:absolute;
-    bottom:5px;
+    position:relative;
+    left:20px;
+    margin-top:30px;
 	font-size:25px;
 	padding:8px 4px;
     background-color:transparent;
@@ -162,11 +164,13 @@ input.confName:focus{
 }
 
 textarea.confDesc{
+    position:relative;
     box-sizing:border-box;
-    width:300px;
+    width:320px;
     height:90px;
     resize:none;
     margin:5px;
+    left:80px;
     background-color:transparent;
     border:solid 1px transparent;
 }

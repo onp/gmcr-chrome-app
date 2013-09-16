@@ -38,7 +38,7 @@ $(function(){
             writableFileEntry.createWriter(function(writer){
                 writer.onerror = function(e){console.log(e)};
                 writer.onwriteend = function(){ console.log("file saved")};
-                writer.write(new Blob( [JSON.stringify(active_conflict)]));
+                writer.write(new Blob( [JSON.stringify(active_conflict,null, "    ")]));
             });
         });
     };

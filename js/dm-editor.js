@@ -6,33 +6,30 @@ dm_editor = function(confData){
       
     $("div.dmList").append(conflict.renderDMlist());    //insert the conflict into the page
     $("div.optList").append(conflict.renderOptionList());
-    $("ul.dmOptions").sortable({connectWith: "ul.dmOptions",
-                                items:"> li:not(.addOpt)",
-                                beforeStop: function(event,ui){
-                                    $sortTargetHack = ui.item;
-                                },
-                                receive: function(event,ui){
-                                    var newDM = $(this).parents("form.dmForm").data("dm")
-                                    if (newDM.options.indexOf(ui.item.data("option"))!=-1){
-                                      $sortTargetHack.remove();
-                                      utils.notify("A decision maker may not have multiple references to the same option");
-                                    }else{
-                                    var $copy = ui.item.data("option").renderOption(newDM);
-                                    newDM.options.push(ui.item.data("option"));
-                                    $sortTargetHack.replaceWith($copy);
-                                    };
-                                }
-    });	
+    conflict.makeOptionsSortable();
+    
+    
+    
     $("ul.dmList").sortable({connectWith: "ul.dmList",
                              items:"> form:not(.addDM)"});		//make lists sortable
 							 
 	$("div.dmList").on("sortreceive","ul.dmOptions",function(){
 		$(this).find("li.addOpt").appendTo(this);
-    });			//keep "add Option" at end of list
+    }); 			//keep "add Option" at end of list
 	
 	$("div.dmList").on("click","img.cornerX",function(){		//activate "remove" x's
         $(this).parent().remove();
 	});
+    
+    $("div.optList").on("click","img.cornerX",function(){
+        option = $(this).parents("li.option").data("option");
+        if (option.views.length ==1){
+            $(this).parent().remove();
+        }else{
+            utils.notify("An option cannot be removed from the bank while it is in use by a Decision Maker");
+            // create popup asking whether all instances should be removed, if the option is used.
+        };
+    });
 	
 	var $iconPicker = $(Mustache.render(templates.iconChooserTemplate,{icons:iconList}));
 	$iconPicker.mouseleave(function(){$iconPicker.detach()});

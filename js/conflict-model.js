@@ -173,26 +173,31 @@
                     .on("click",function(){		        //activate "add DM" button
                         newDM = _conf.newDecisionMaker()
                         $(this).before(newDM.renderDM());
-                        $("ul.dmOptions").sortable({
-                            connectWith: "ul.dmOptions",
-                            items:"> li:not(.addOpt)",
-                            beforeStop: function(event,ui){
-                                $sortTargetHack = ui.item;
-                            },
-                            receive: function(event,ui){
-                                var newDM = $(this).parents("form.dmForm").data("dm")
-                                if (newDM.options.indexOf(ui.item.data("option"))!=-1){
-                                  $sortTargetHack.remove();
-                                  utils.notify("A decision maker may not have multiple references to the same option");
-                                }else{
-                                var $copy = ui.item.data("option").renderOption(newDM);
-                                newDM.options.push(ui.item.data("option"));
-                                $sortTargetHack.replaceWith($copy);
-                                };
-                            }
-                        });	
+                        _conf.makeOptionsSortable();
                     });
             return $dmList;
+        };
+        
+        this.makeOptionsSortable = function(){
+            //makes options sortable by drag-and-drop and allows movement between lists.
+            $("ul.dmOptions").sortable({
+                connectWith: "ul.dmOptions",
+                items:"> li:not(.addOpt)",
+                beforeStop: function(event,ui){
+                    $sortTargetHack = ui.item;
+                },
+                receive: function(event,ui){
+                    var newDM = $(this).parents("form.dmForm").data("dm")
+                    if (newDM.options.indexOf(ui.item.data("option"))!=-1){
+                      $sortTargetHack.remove();
+                      utils.notify("A decision maker may not have multiple references to the same option");
+                    }else{
+                    var $copy = ui.item.data("option").renderOption(newDM);
+                    newDM.options.push(ui.item.data("option"));
+                    $sortTargetHack.replaceWith($copy);
+                    };
+                }
+            });	
         };
         
         this.renderOptionList = function(){

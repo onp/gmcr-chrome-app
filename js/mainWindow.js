@@ -4,7 +4,9 @@ $(function(){
     $("div#welcome-new").add("p#button-new").click(function(){
         $("div#main-content").html(templates.dmEditMain);
         $("div#topbar-content").html(templates.dmEditTop);
+        $('#sidebar').show();
         active_conflict = dm_editor();
+
     });
     
     $('#button-load').add('#welcome-load').click(function(){
@@ -20,6 +22,7 @@ $(function(){
                         var data = JSON.parse(e.target.result);
                         $("div#main-content").html(templates.dmEditMain);
                         $("div#topbar-content").html(templates.dmEditTop);
+                        $('#sidebar').show();
                         active_conflict = dm_editor(data);
                         active_conflict.fileEntry = chrome.fileSystem.retainEntry(readOnlyEntry);
                     };
@@ -63,7 +66,7 @@ $(function(){
 
     
     $('#welcome-examples').click(function(){
-                console.log(active_conflict.fileEntry);
+         console.log("not implemented");
     });
 
 })

@@ -53,6 +53,7 @@ div.notification{
 }
 
 div#sidebar{
+    display:None;
     position:fixed;
     width:200px;
     height:100%;

@@ -333,9 +333,9 @@ li.option div.optDetails{
 }
 
 img.cornerX{
-	position:absolute;
-	right:4px;
-	top:3px;
+	margin-right:4px;
+	margin-top:3px;
+    float:right;
 	height:14px;
 	width:14px;
 	padding:1px;
@@ -345,6 +345,21 @@ img.cornerX{
 img.cornerX:hover{
 	border:1px solid black;
 	padding:0px;
+}
+
+img.downArrow{
+	margin-right:4px;
+	margin-top:3px;
+    float:right;
+    height:14px;
+	width:14px;
+    padding:1px;
+}
+
+img.downArrow:hover{
+    padding:0px;
+    height:16px;
+    width:16px;
 }
 
 div.iconPicker{

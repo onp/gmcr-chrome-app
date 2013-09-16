@@ -1,4 +1,4 @@
-dmPageScript = function(){
+dm_editor = function(confData){
     //compile templates used to render views
 	var dmListMaker = Mustache.compile(templates.dmListTemplate);
 	var dmMaker = Mustache.compile(templates.dmTemplate);
@@ -8,7 +8,7 @@ dmPageScript = function(){
     
     //pop-up notification used for warnings/alerts
     var notify = function(message){
-        $("<div class='notification' >"+message+"</div>").appendTo("div.container")
+        $("<div class='notification' >"+message+"</div>").appendTo("div#container")
                  .fadeIn().delay(2000).fadeOut(function(){ $(this).remove(); });
     };
     
@@ -20,6 +20,8 @@ dmPageScript = function(){
 							"handshake.png",
 							"tree.png",
 							"water.png",
+                            "gun.png",
+                            "flag.png"
 	]};	
     
     var $sortTargetHack = "none"; //needed to cope with a jquery draggable issue (acts as a reference holder)
@@ -27,7 +29,9 @@ dmPageScript = function(){
     function OptionObj(conflict,optionData){
         var _conf = conflict;
         var _opt = this;
+        this.views = [];
         
+        //load data or initialize new.
         if (typeof optionData === "undefined"){
             this.name = "New Option";
             this.image = iconList.icons[0];
@@ -37,8 +41,7 @@ dmPageScript = function(){
             this.image = optionData.image;
             this.reversible = optionData.reversible;
         };
-        this.views = [];
-        
+
         this.toJSON = function(){
             return {"name":this.name,"image":this.image,"reversible":this.reversible}
         }
@@ -106,17 +109,21 @@ dmPageScript = function(){
     }
     
     function DMObj(conflict,dmData){
-        if (typeof dmData === "undefined"){
-            dmData = {name:	"new Decision maker",
-                      options: []};
-        };
         var _conf = conflict;
         var _dm = this;
-        this.name = dmData.name;
-        this.options = $.map(dmData.options,function(opt){
-            return _conf.options[opt]
-        });
+        this.views = [];
         
+        if (typeof dmData === "undefined"){
+            this.name =	"new Decision maker",
+            this.options = [];
+        }else{
+            this.name = dmData.name;
+            this.options = $.map(dmData.options,function(opt){
+                return _conf.options[opt]
+            });
+        };
+
+
         this.renderDM = function(){
             $dm = $(dmMaker(this));
             $dm.data("dm",_dm);
@@ -134,7 +141,11 @@ dmPageScript = function(){
                 _dm.options.push(newOpt);
                 $(this).before(newOpt.renderOption(_dm));
             });
-            
+            $dm.on('remove',function(){
+                _dm.views.splice(_dm.views.indexOf($dm),1);
+                _conf.decisionMakers.splice(_conf.decisionMakers.indexOf(_dm),1);
+            });
+            _dm.views.push($dm);
             return $dm;
         };
         
@@ -148,9 +159,10 @@ dmPageScript = function(){
     function ConflictObj(conflict){
         var _conf = this
         
-        //generate conflict model from json.
+        //generate conflict model from json, or initialize new conflict;
         if (typeof(conflict) == "undefined"){
-            this.title = "New Conflict";
+            this.title = '';
+            this.description = '';
             this.options = [new OptionObj(_conf)];
             this.decisionMakers = [new DMObj(_conf)];
         }else{
@@ -165,10 +177,10 @@ dmPageScript = function(){
             this.title = conflict.title;
             this.description = conflict.description;
         }
-
+        
         //Keep title and description synced to model
-        $("input.confName").change(function(){     _conf.title = $(this).val();      });
-        $("textarea.confDesc").change(function(){  _conf.description = $(this).val();});
+        $("input.confName").val(_conf.title).change(function(){     _conf.title = $(this).val();      });
+        $("textarea.confDesc").val(_conf.description).change(function(){  _conf.description = $(this).val();});
         
         this.renderDMlist = function(){
             //returns a jquery object containing a rendered DMList.
@@ -190,7 +202,7 @@ dmPageScript = function(){
                                 var newDM = $(this).parents("form.dmForm").data("dm")
                                 if (newDM.options.indexOf(ui.item.data("option"))!=-1){
                                   $sortTargetHack.remove();
-                                  notify("A decision maker my not have duplicate options");
+                                  notify("A decision maker may not have multiple references to the same option");
                                 }else{
                                 var $copy = ui.item.data("option").renderOption(newDM);
                                 newDM.options.push(ui.item.data("option"));
@@ -241,10 +253,9 @@ dmPageScript = function(){
             return {"options":this.options,"decisionMakers":this.decisionMakers,
                     "title":this.title,"description":this.description};
         }
-    
     };
     
-    var conflict = new ConflictObj();
+    var conflict = new ConflictObj(confData);
       
     $("div.dmList").append(conflict.renderDMlist());    //insert the conflict into the page
     $("div.optList").append(conflict.renderOptionList());
@@ -257,7 +268,7 @@ dmPageScript = function(){
                                     var newDM = $(this).parents("form.dmForm").data("dm")
                                     if (newDM.options.indexOf(ui.item.data("option"))!=-1){
                                       $sortTargetHack.remove();
-                                      notify("A decision maker my not have duplicate options");
+                                      notify("A decision maker may not have multiple references to the same option");
                                     }else{
                                     var $copy = ui.item.data("option").renderOption(newDM);
                                     newDM.options.push(ui.item.data("option"));
@@ -283,36 +294,9 @@ dmPageScript = function(){
 		$iconPicker.parent().find("img.icon").attr("src",newSrc).change();
 		$iconPicker.detach();
 	});
-	$("div.dmList").on("click","img.icon",function(){
+	$("div#dm-editor").on("click","img.icon",function(){
 		$(this).after($iconPicker)
 	});
     
-    var packConflict = function(conf){
-        packed = {};
-        packed.confTitle = conf.title;
-        packed.confDescription = conf.description;
-        packed.conf = JSON.stringify(conf);
-        return packed;
-    };
-
-    $('#saveButton').click(function(){
-        console.log(packConflict(conflict));
-        $.post("", packConflict(conflict))
-            .done(function(data){
-                if (data != "Ajax_save_success."){
-                    window.history.replaceState({'blah':'blah'},'a title',data);
-                };
-                console.log(data);
-                })
-            .fail(function(data){
-                console.log("failed");
-                var win=window.open('about:blank');
-                with(win.document)
-                {
-                  open();
-                  write(data.responseText);
-                  close();
-                };
-            });
-    });
+    return conflict
 };

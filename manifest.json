@@ -3,6 +3,9 @@
     "description":"Decision Support System implementing the Graph Model for Conflict Resolution",
     "version": "0.1",
     "manifest_version":2,
+    "permissions":[
+        {"fileSystem":["write"]}
+    ],
     "app":{
         "background":{
             "scripts":["background.js"]

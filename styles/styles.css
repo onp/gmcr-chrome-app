@@ -1,5 +1,5 @@
 html{
-    overflow-y:scroll;
+    overflow-y:auto;
 }
 
 div#container{
@@ -42,10 +42,10 @@ span#topbar-appName{
 
 div.notification{
     position:fixed;
-    width:250px;
+    width:300px;
     top:5px;
     left:50%;
-    margin:0px 0px 0px -125px;
+    margin:0px 0px 0px -150px;
     background-color:red;
     font-size:15px;
     text-align:center;
@@ -241,7 +241,8 @@ a.confLink{
 div.optList{
     border:2px black solid;
     background-color:lightBlue;
-    float:right;
+    float:left;
+    margin: 0px 10px;
 }
 
 p.optList-title{

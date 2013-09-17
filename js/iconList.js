@@ -1,1 +1,1 @@
-window.iconList = ["briefcase.png", "dam.png", "flag.png", "gun.png", "handshake.png", "question_mark.png", "tree.png", "water.png"];
+window.iconList = ["briefcase.png", "dam.png", "fist.png", "flag.png", "gun.png", "handshake.png", "question_mark.png", "tree.png", "water.png"];

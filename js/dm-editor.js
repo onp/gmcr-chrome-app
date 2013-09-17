@@ -30,6 +30,15 @@ dm_editor = function(confData){
             // create popup asking whether all instances should be removed, if the option is used.
         };
     });
+    
+    $("div.dmList").on("click","img.arrow.down",function(){
+        $(this).siblings("ul.dmOptions").addClass("compact");
+        $(this).replaceWith("<img src='/images/left.png' class='arrow left'/>");
+    });
+    $("div.dmList").on("click","img.arrow.left",function(){
+        $(this).siblings("ul.dmOptions").removeClass("compact");
+        $(this).replaceWith("<img src='/images/down.png' class='arrow down'/>");
+    });
 	
 	var $iconPicker = $(Mustache.render(templates.iconChooserTemplate,{icons:iconList}));
 	$iconPicker.mouseleave(function(){$iconPicker.detach()});
@@ -39,7 +48,9 @@ dm_editor = function(confData){
 		$iconPicker.detach();
 	});
 	$("div#dm-editor").on("click","img.icon",function(){
-		$(this).after($iconPicker)
+        if ($(this).parents(".compact").length ==0){
+            $(this).after($iconPicker);
+        };
 	});
     
     return conflict

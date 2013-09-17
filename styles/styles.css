@@ -214,29 +214,29 @@ li.addDM {
     line-height:1;
 }
 
-a.addConflict{
-	display:block;
-	color:black;
-}
-
-a.addConflict:hover,
 li.addDM:hover {
 	border:2px black solid;
 	padding:1px 0px;
 }
 
-a.confLink,
 form.dmForm input.dmName{
 	position:relative;
 	margin:5px;
 	width:70%;
 	font-size:20px;
 	color:red;
-	padding:8px 4px;
+	padding:2px 4px;
+    background-color:transparent;
+    border:none;
 }
 
-a.confLink{
-	color:black;
+form.dmForm input.dmName:hover{
+    padding:1px 3px;
+    border:1px solid black;
+}
+
+form.dmForm input.dmName:focus{
+    background-color:white;
 }
 
 div.optList{
@@ -259,6 +259,7 @@ form.dmForm ul.dmOptions{
 	position:relative;
 	width:300px;
 	background-color:beige;
+    min-height:60px;
 }
 
 div.optBank{
@@ -297,8 +298,8 @@ li.option img.icon{
 	position:relative;
 	height:40px;
 	width:40px;
-	border:2px solid black;
 	border-radius:10px;
+	border:2px solid black;
 	margin:7px;
 	background-color:gold;
 }
@@ -347,7 +348,7 @@ img.cornerX:hover{
 	padding:0px;
 }
 
-img.downArrow{
+img.arrow{
 	margin-right:4px;
 	margin-top:3px;
     float:right;
@@ -356,7 +357,7 @@ img.downArrow{
     padding:1px;
 }
 
-img.downArrow:hover{
+img.arrow:hover{
     padding:0px;
     height:16px;
     width:16px;
@@ -386,4 +387,34 @@ img.iconPicker{
 img.iconPicker:hover{
 	border:3px solid black;
 	margin:1.5px;
+}
+
+ul.dmOptions.compact li.addOpt{
+    visibility:hidden;
+    height:0px;
+    margin:0px;
+    padding:0px;
+    clear:both;
+}
+
+ul.compact li.option{
+    float:left;
+    width:60px;
+}
+
+ul.compact li.option input.optName{
+    display:none;
+}
+
+ul.compact li.option div.optDetails{
+    display:none;
+}
+
+ul.compact li.option img.cornerX{
+    display:none;
+}
+
+ul.compact li.option img.icon:hover{
+    border:2px solid black;
+	margin:7px;
 }

@@ -139,6 +139,7 @@ div#welcome div#welcome-new{
     background-color:yellow;
 }
 
+div#infeasible-editor,
 div#dm-editor{
     margin: 5px 10px 10px 10px;
     padding:5px;
@@ -183,12 +184,14 @@ textarea.confDesc:focus{
 textarea.confDesc:hover{
     border:solid 1px black;
 }
-
-div.dmList{
+div.infeasible-list-container,
+div.mutex-list-container,
+div.dm-list-container{
     min-width:325px;
     float:left;
+    margin-right:10px;
 }
-
+form.infeasibleForm,
 form.dmForm{
 	position:relative;
 	margin-bottom:10px;
@@ -199,6 +202,8 @@ form.dmForm{
     box-sizing:border-box;
 }
 
+li.addInfeasible,
+li.addMutex,
 li.addDM {
 	position:relative;
     box-sizing:border-box;
@@ -214,11 +219,14 @@ li.addDM {
     line-height:1;
 }
 
+li.addInfeasible:hover,
+li.addMutex:hover,
 li.addDM:hover {
 	border:2px black solid;
 	padding:1px 0px;
 }
 
+input.infeasibleReason,
 form.dmForm input.dmName{
 	position:relative;
 	margin:5px;
@@ -230,11 +238,13 @@ form.dmForm input.dmName{
     border:none;
 }
 
+input.infeasibleReason:hover,
 form.dmForm input.dmName:hover{
     padding:1px 3px;
     border:1px solid black;
 }
 
+input.infeasibleReason:focus,
 form.dmForm input.dmName:focus{
     background-color:white;
 }
@@ -243,15 +253,17 @@ div.optList{
     border:2px black solid;
     background-color:lightBlue;
     float:left;
-    margin: 0px 10px;
 }
 
+p.list-title,
 p.optList-title{
     font-size:20px;
     text-align:center;
 }
 
 div.optBank,
+form.mutexForm  ul.dmOptions,
+form.infeasibleForm ul.dmOptions,
 form.dmForm ul.dmOptions{
 	margin:5px;
 	padding:5px;
@@ -389,7 +401,7 @@ img.iconPicker:hover{
 	margin:1.5px;
 }
 
-ul.dmOptions.compact li.addOpt{
+ul.compact li.addOpt{
     visibility:hidden;
     height:0px;
     margin:0px;
@@ -424,10 +436,10 @@ p.infeasibleList-header{
     text-align:center;
 }
 
-div.infeasible-list-box,
+/*div.infeasible-list-box,
 div.mutually-exclusive-list-box{
     border:2px black solid;
     background-color:lightBlue;
     float:left;
     margin: 0px 10px;
-}
+}*/

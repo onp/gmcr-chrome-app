@@ -116,7 +116,7 @@
 
 
         this.renderDM = function(){
-            $dm = $(templates.dmTemplate);
+            var $dm = $(templates.dmTemplate);
             $dm.data("dm",_dm);
             $dm.data("conflict",_conf);
             $dm.find("input.dmName").change(function(){
@@ -158,6 +158,28 @@
             };
         };
     };
+    
+    var InfeasibleObj = function(conflict,infeasibleData){
+        var _conf = conflict;
+        var _inf = this;
+        
+        this.renderInfeasible = function(){
+            $inf = $(templates.infeasibleTemplate);
+            return $inf;
+        };
+    };
+    
+    var MutexObj = function(conflict,mutexData){
+        var _conf = conflict;
+        var _mutex = this;
+        
+        this.renderMutex = function(){
+            $mutex = $(templates.infeasibleTemplate);
+            return $mutex;
+        };
+    };
+    
+    //add renderMutexList and renderInfeasList to ConflictObj
         
     conflictModels.ConflictObj = function(conflictData){
         var _conf = this
@@ -168,6 +190,8 @@
             this.description = '';
             this.options = [new OptionObj(_conf)];
             this.decisionMakers = [new DMObj(_conf)];
+            this.infeasibles = [];
+            this.mutexs = [];
         }else{
             this.options = $.map(conflictData.options,function(opt){
                 return new OptionObj(_conf,opt);
@@ -176,6 +200,18 @@
             this.decisionMakers = $.map(conflictData.decisionMakers,function(dmData){
                 return new DMObj(_conf,dmData);
             });
+            if (conflictData.infeasible !== undefined){
+                this.infeasibles = $.map(conflictData.infeasibles,function(dmData){
+                    return new InfeasibleObj(_conf,dmData);
+                });
+            
+                this.mutexs = $.map(conflictData.mutexs,function(dmData){
+                    return new MutexObj(_conf,dmData);
+                });
+            }else{
+                this.infeasibles = [];
+                this.mutexs = [];
+            };
             
             this.title = conflictData.title;
             this.description = conflictData.description;
@@ -187,7 +223,7 @@
         
         this.renderDMlist = function(){
             //returns a jquery object containing a rendered DMList.
-            $dmList = $(templates.dmListTemplate);
+            var $dmList = $(templates.dmListTemplate);
             $.each(_conf.decisionMakers,function(){
                 $dmList.append(this.renderDM());
             });
@@ -198,6 +234,36 @@
                         _conf.makeOptionsSortable();
                     });
             return $dmList;
+        };
+        
+        this.renderMutexList = function(){
+            //returns a jquery object containing a rendered list of mutually exclusive options.
+            var $mutexList = $(templates.mutexListTemplate);
+            $.each(_conf.mutexs,function(){
+                $mutexList.append(this.renderMutex());
+            });
+            $mutexList.find("li.addMutex").appendTo($mutexList)
+                    .on("click",function(){		        //activate "add Mutex" button
+                        var newMutex = _conf.newMutex()
+                        $(this).before(newMutex.renderMutex());
+                        //_conf.makeOptionsSortable();
+                    });
+            return $mutexList;
+        };
+
+        this.renderInfeasibleList = function(){
+            //returns a jquery object containing a rendered list of infeasible options.
+            var $infeasibleList = $(templates.infeasibleListTemplate);
+            $.each(_conf.infeasibles,function(){
+                $infeasibleList.append(this.renderInfeasible());
+            });
+            $infeasibleList.find("li.addInfeasible").appendTo($infeasibleList)
+                    .on("click",function(){		        //activate "add Infeasible" button
+                        var newInfeasible = _conf.newInfeasible();
+                        $(this).before(newInfeasible.renderInfeasible());
+                        //_conf.makeOptionsSortable();
+                    });
+            return $infeasibleList;
         };
         
         this.makeOptionsSortable = function(){
@@ -254,7 +320,19 @@
             this.decisionMakers.push(newDM);
             return newDM;
         };
-         
+        
+        this.newInfeasible = function(){
+        var newInfeasible = new InfeasibleObj(_conf);
+            this.infeasibles.push(newInfeasible);
+            return newInfeasible;
+        };
+        
+        this.newMutex = function(){
+            var newMutex = new MutexObj(_conf);
+            this.mutexs.push(newMutex);
+            return newMutex;
+        };
+        
         this.toJSON = function(){
             $.each(_conf.options,function(i){this.index = i;});
 
@@ -262,6 +340,8 @@
                     "title":this.title,"description":this.description};
         };
     };
+    
+    
     
     //make OptionObj and DMObj publicly accessible
     conflictModels.OptionObj = OptionObj

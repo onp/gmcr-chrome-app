@@ -14,7 +14,7 @@
             var conflict = new conflictModels.ConflictObj(confData);
         };
           
-        $("div.dmList").append(conflict.renderDMlist());    //insert the conflict into the page
+        $("div.dm-list-container").append(conflict.renderDMlist());    //insert the conflict into the page
         $("div.optList").append(conflict.renderOptionList());
         conflict.makeOptionsSortable();
         
@@ -22,11 +22,11 @@
         $("ul.dmList").sortable({connectWith: "ul.dmList",
                                  items:"> form:not(.addDM)"});		//make lists sortable
                                  
-        $("div.dmList").on("sortreceive","ul.dmOptions",function(){
+        $("div.dm-list-container").on("sortreceive","ul.dmOptions",function(){
             $(this).find("li.addOpt").appendTo(this);
         }); 			//keep "add Option" at end of list
         
-        $("div.dmList").on("click","img.cornerX",function(e){		//activate "remove" x's
+        $("div.dm-list-container").on("click","img.cornerX",function(e){		//activate "remove" x's
             console.log(e);
             $(this).parent().trigger("drop-entry");
         });
@@ -41,11 +41,11 @@
             };
         });
         
-        $("div.dmList").on("click","img.arrow.down",function(){
+        $("div.dm-list-container").on("click","img.arrow.down",function(){
             $(this).siblings("ul.dmOptions").addClass("compact");
             $(this).replaceWith("<img src='/images/left.png' class='arrow left'/>");
         });
-        $("div.dmList").on("click","img.arrow.left",function(){
+        $("div.dm-list-container").on("click","img.arrow.left",function(){
             $(this).siblings("ul.dmOptions").removeClass("compact");
             $(this).replaceWith("<img src='/images/down.png' class='arrow down'/>");
         });

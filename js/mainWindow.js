@@ -27,6 +27,9 @@ $(function(){
         gmcr.dm_editor("reload");
     });
     $('#button-infeasible').click(gmcr.infeasible);
+    $('#button-preferences').click(function(){
+        utils.notify("not implemented yet.");
+    });
     
     $('#button-welcome').click(gmcr.welcome);
 

@@ -1,10 +1,18 @@
 (function(gmcr, $, undefined ) {
 
     gmcr.dm_editor = function(confData){
+    
+        $("div#main-content").html(templates.dmEditMain);
+        $("div#topbar-content").html(templates.dmEditTop);
+        $('#sidebar').show();
         
         var $sortTargetHack = "none"; //needed to cope with a jquery draggable issue (acts as a reference holder)
         
-        var conflict = new conflictModels.ConflictObj(confData);
+        if (confData == "reload"){
+            var conflict = gmcr.active_conflict;
+        }else{
+            var conflict = new conflictModels.ConflictObj(confData);
+        };
           
         $("div.dmList").append(conflict.renderDMlist());    //insert the conflict into the page
         $("div.optList").append(conflict.renderOptionList());
@@ -18,14 +26,15 @@
             $(this).find("li.addOpt").appendTo(this);
         }); 			//keep "add Option" at end of list
         
-        $("div.dmList").on("click","img.cornerX",function(){		//activate "remove" x's
-            $(this).parent().remove();
+        $("div.dmList").on("click","img.cornerX",function(e){		//activate "remove" x's
+            console.log(e);
+            $(this).parent().trigger("drop-entry");
         });
         
         $("div.optList").on("click","img.cornerX",function(){
             option = $(this).parents("li.option").data("option");
             if (option.views.length ==1){
-                $(this).parent().remove();
+                $(this).parent().trigger("drop-entry");
             }else{
                 utils.notify("An option cannot be removed from the bank while it is in use by a Decision Maker");
                 // create popup asking whether all instances should be removed, if the option is used.
@@ -41,6 +50,8 @@
             $(this).replaceWith("<img src='/images/down.png' class='arrow down'/>");
         });
         
+        //icon picker widget that appears when an option icon is clicked, allowing the icon to be changed.
+        //only active when the option is not being displayed in "compact" form.
         var $iconPicker = $(Mustache.render(templates.iconChooserTemplate,{icons:iconList}));
         $iconPicker.mouseleave(function(){$iconPicker.detach()});
         $iconPicker.find("img.iconPicker").click(function(){

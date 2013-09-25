@@ -35,9 +35,6 @@
                     reader.onerror = function(){console.log("error reading file")};
                     reader.onloadend = function(e){
                         var data = JSON.parse(e.target.result);
-                        $("div#main-content").html(templates.dmEditMain);
-                        $("div#topbar-content").html(templates.dmEditTop);
-                        $('#sidebar').show();
                         gmcr.active_conflict = gmcr.dm_editor(data);
                         gmcr.active_conflict.fileEntry = chrome.fileSystem.retainEntry(readOnlyEntry);
                     };
@@ -47,10 +44,8 @@
         );
     }
     
+    //loads a fresh conflict into the window.
     utils.newConflict = function(){
-        $("div#main-content").html(templates.dmEditMain);
-        $("div#topbar-content").html(templates.dmEditTop);
-        $('#sidebar').show();
         gmcr.active_conflict = gmcr.dm_editor();
     };
 

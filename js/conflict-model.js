@@ -34,9 +34,11 @@
             $newView.data("dm", dm);
             $newView.data("option",_opt);
             $newView.data("conflict",_conf);
-            $newView.on('remove',function(){
+            $newView.on('drop-entry',function(e){
                 _opt.views.splice(_opt.views.indexOf($newView),1);
-                dm.options.splice($newView.data("dm").options.indexOf(_opt),1);
+                if (dm !== undefined){
+                    dm.options.splice($newView.data("dm").options.indexOf(_opt),1);
+                };
                 if (_opt.views.length==1){
                     _opt.views[0].addClass("unused")
                         .find("span").html("Type: unused");
@@ -46,6 +48,15 @@
                     });
                 }else if (_opt.views.length==0){
                     _conf.options.splice(_conf.options.indexOf(_opt),1);
+                };
+                $newView.remove()
+                return false //prevents event from bubbling up further.
+            });
+            
+            $newView.on('remove',function(e){
+                //ensure that the reference to a view is removed if the view gets removed.
+                if (_opt.views.indexOf($newView) !== -1){
+                    _opt.views.splice(_opt.views.indexOf($newView),1);
                 };
             });
             //keep all copies of the option synced.
@@ -121,10 +132,21 @@
                 _dm.options.push(newOpt);
                 $(this).before(newOpt.renderOption(_dm));
             });
-            $dm.on('remove',function(){
+            
+            $dm.on('drop-entry',function(e){
                 _dm.views.splice(_dm.views.indexOf($dm),1);
                 _conf.decisionMakers.splice(_conf.decisionMakers.indexOf(_dm),1);
+                $dm.remove();
+                return false  //prevents event from bubbling up further
             });
+            
+            $dm.on('remove',function(e){
+                //ensure that the reference to a view is removed if the view gets removed.
+                if ( _dm.views.indexOf($dm) !== -1){
+                    _dm.views.splice(_dm.views.indexOf($dm),1);
+                };
+            });
+            
             _dm.views.push($dm);
             _dm.updateViews();
             return $dm;
@@ -166,7 +188,7 @@
         this.renderDMlist = function(){
             //returns a jquery object containing a rendered DMList.
             $dmList = $(templates.dmListTemplate);
-            $.each(this.decisionMakers,function(){
+            $.each(_conf.decisionMakers,function(){
                 $dmList.append(this.renderDM());
             });
             $dmList.find("li.addDM").appendTo($dmList)
@@ -241,7 +263,7 @@
         };
     };
     
-    //make OptionObj and DMObj publicly acessible
+    //make OptionObj and DMObj publicly accessible
     conflictModels.OptionObj = OptionObj
     conflictModels.DMObj = DMObj
     

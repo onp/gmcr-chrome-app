@@ -23,6 +23,11 @@ $(function(){
         );
     });
     
+    $('#button-dm-editor').click(function(){
+        gmcr.dm_editor("reload");
+    });
+    $('#button-infeasible').click(gmcr.infeasible);
+    
     $('#button-welcome').click(gmcr.welcome);
 
 

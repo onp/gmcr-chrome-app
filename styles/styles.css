@@ -418,3 +418,16 @@ ul.compact li.option img.icon:hover{
     border:2px solid black;
 	margin:7px;
 }
+
+p.infeasibleList-header{
+    font-size:20px;
+    text-align:center;
+}
+
+div.infeasible-list-box,
+div.mutually-exclusive-list-box{
+    border:2px black solid;
+    background-color:lightBlue;
+    float:left;
+    margin: 0px 10px;
+}

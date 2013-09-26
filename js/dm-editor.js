@@ -15,7 +15,7 @@
         };
           
         $("div.dm-list-container").append(conflict.renderDMlist());    //insert the conflict into the page
-        $("div.optList").append(conflict.renderOptionList());
+        $("div.option-bank-container").append(conflict.renderOptionList());
         conflict.makeOptionsSortable();
         
 
@@ -31,7 +31,7 @@
             $(this).parent().trigger("drop-entry");
         });
         
-        $("div.optList").on("click","img.cornerX",function(){
+        $("div.option-bank-container").on("click","img.cornerX",function(){
             option = $(this).parents("li.option").data("option");
             if (option.views.length ==1){
                 $(this).parent().trigger("drop-entry");

@@ -249,14 +249,13 @@ form.dmForm input.dmName:focus{
     background-color:white;
 }
 
-div.optList{
+div.option-bank-container{
     border:2px black solid;
     background-color:lightBlue;
     float:left;
 }
 
-p.list-title,
-p.optList-title{
+p.list-title{
     font-size:20px;
     text-align:center;
 }
@@ -264,6 +263,7 @@ p.optList-title{
 div.optBank,
 form.mutexForm  ul.dmOptions,
 form.infeasibleForm ul.dmOptions,
+ul.option-list,
 form.dmForm ul.dmOptions{
 	margin:5px;
 	padding:5px;

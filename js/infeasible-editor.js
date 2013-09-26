@@ -5,7 +5,7 @@
         
         var conflict = gmcr.active_conflict;
     
-        $("div.optList").append(conflict.renderOptionList());
+        $("div.option-bank-container").append(conflict.renderOptionList());
         $("div.infeasible-list-container").append(conflict.renderInfeasibleList());
         $("div.mutex-list-container").append(conflict.renderMutexList());
         

@@ -123,8 +123,8 @@
                 _dm.name = $(this).val();
             });
             $.each(this.options,function(){
-                $dm.find(".dmOptions").append(this.renderOption(_dm));
-                $dm.find(".addOpt").appendTo($dm.find(".dmOptions"));
+                $dm.find("ul.option-list").append(this.renderOption(_dm));
+                $dm.find(".addOpt").appendTo($dm.find("ul.option-list"));
             });
             
             $dm.find("li.addOpt").on("click",function(){		//activate "add Option" button
@@ -268,8 +268,8 @@
         
         this.makeOptionsSortable = function(){
             //makes options sortable by drag-and-drop and allows movement between lists.
-            $("ul.dmOptions").sortable({
-                connectWith: "ul.dmOptions",
+            $("ul.option-list").sortable({
+                connectWith: "ul.option-list",
                 items:"> li:not(.addOpt)",
                 beforeStop: function(event,ui){
                     $sortTargetHack = ui.item;
@@ -290,14 +290,14 @@
         
         this.renderOptionList = function(){
             //returns a jquery object containing a rendered optionlist.
-            $optionList = $("<div class='optBank'>");
+            $optionList = $("<div class='option-list'>");
             $.each(this.options,function(){
                 $optionList.append(this.renderOption());
             });
             $optionList.find("li.option").draggable({
                 revert:"invalid",
                 helper:"clone",
-                connectToSortable:"ul.dmOptions" 
+                connectToSortable:"ul.option-list" 
             });
             return $optionList;
         };
@@ -305,11 +305,11 @@
         this.newOption = function(dm){
             var newOpt = new OptionObj(_conf);
             $newOptElem = newOpt.renderOption(dm);
-            $("div.optBank").append($newOptElem);
+            $("div.option-list").append($newOptElem);
             $newOptElem.draggable({
                 revert:"invalid",
                 helper:"clone",
-                connectToSortable:"ul.dmOptions" 
+                connectToSortable:"ul.option-list" 
             });
             this.options.push(newOpt);
             return newOpt;

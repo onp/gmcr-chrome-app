@@ -260,11 +260,7 @@ p.list-title{
     text-align:center;
 }
 
-div.optBank,
-form.mutexForm  ul.dmOptions,
-form.infeasibleForm ul.dmOptions,
-ul.option-list,
-form.dmForm ul.dmOptions{
+.option-list{
 	margin:5px;
 	padding:5px;
 	padding-bottom:1px;
@@ -274,10 +270,6 @@ form.dmForm ul.dmOptions{
     min-height:60px;
 }
 
-div.optBank{
-    padding-top:5px;
-    float:right;
-}
 
 li.option {
 	height:60px;

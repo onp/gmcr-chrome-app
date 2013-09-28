@@ -8,6 +8,7 @@
         $("div.option-bank-container").append(conflict.renderOptionList());
         $("div.infeasible-list-container").append(conflict.renderInfeasibleList());
         $("div.mutex-list-container").append(conflict.renderMutexList());
+        conflict.makeOptionsSortable();
         
         //activate comapct arrows.
         $("div.mutex-list-container,div.infeasible-list-container").on("click","img.arrow.down",function(){

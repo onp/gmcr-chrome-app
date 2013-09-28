@@ -191,8 +191,8 @@ div.dm-list-container{
     float:left;
     margin-right:10px;
 }
-form.infeasibleForm,
-form.dmForm{
+
+form.optionOwner{
 	position:relative;
 	margin-bottom:10px;
 	border:2px solid black;
@@ -226,8 +226,8 @@ li.addDM:hover {
 	padding:1px 0px;
 }
 
-input.infeasibleReason,
-form.dmForm input.dmName{
+input.owner-name,
+form.optionOwner input.dmName{
 	position:relative;
 	margin:5px;
 	width:70%;
@@ -238,14 +238,14 @@ form.dmForm input.dmName{
     border:none;
 }
 
-input.infeasibleReason:hover,
-form.dmForm input.dmName:hover{
+input.owner-name:hover,
+form.optionOwner input.dmName:hover{
     padding:1px 3px;
     border:1px solid black;
 }
 
-input.infeasibleReason:focus,
-form.dmForm input.dmName:focus{
+input.owner-name:focus,
+form.optionOwner input.dmName:focus{
     background-color:white;
 }
 
@@ -258,6 +258,7 @@ div.option-bank-container{
 p.list-title{
     font-size:20px;
     text-align:center;
+    margin-bottom:5px;
 }
 
 .option-list{
@@ -423,15 +424,8 @@ ul.compact li.option img.icon:hover{
 	margin:7px;
 }
 
-p.infeasibleList-header{
+/* p.infeasibleList-header{
     font-size:20px;
     text-align:center;
 }
-
-/*div.infeasible-list-box,
-div.mutually-exclusive-list-box{
-    border:2px black solid;
-    background-color:lightBlue;
-    float:left;
-    margin: 0px 10px;
-}*/
+*/

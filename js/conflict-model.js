@@ -393,7 +393,7 @@
         };
         
         this.newInfeasible = function(){
-        var newInfeasible = new InfeasibleObj(_conf);
+            var newInfeasible = new InfeasibleObj(_conf);
             this.infeasibles.push(newInfeasible);
             return newInfeasible;
         };

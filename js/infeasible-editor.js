@@ -10,7 +10,7 @@
         $("div.mutex-list-container").append(conflict.renderMutexList());
         conflict.makeOptionsSortable();
         
-        //activate comapct arrows.
+        //activate compact arrows.
         $("div.mutex-list-container,div.infeasible-list-container").on("click","img.arrow.down",function(){
             $(this).siblings("ul.option-list").addClass("compact");
             $(this).replaceWith("<img src='/images/left.png' class='arrow left'/>");

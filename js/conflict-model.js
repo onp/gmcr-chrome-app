@@ -278,6 +278,9 @@
         });
 
         $list.on('drop-entry',function(e){
+            $list.find("li.option").each(function(){
+                $(this).trigger('drop-entry');
+            });
             owner.view = undefined;
             owner.removeFromConflict()
             $list.remove();

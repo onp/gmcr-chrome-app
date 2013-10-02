@@ -1,5 +1,10 @@
 html{
+    height:100%;
     overflow-y:auto;
+}
+
+body{
+    height:100%;
 }
 
 div#container{
@@ -332,6 +337,7 @@ li.option input.optName{
 	margin:5px;
 	font-weight:bold;
 	font-size:16px;
+    width:160px;
 }
 
 li.option input.optName:hover{
@@ -410,15 +416,9 @@ ul.compact li.option{
     width:60px;
 }
 
-ul.compact li.option input.optName{
-    display:none;
-}
-
-ul.compact li.option div.optDetails{
-    display:none;
-}
-
-ul.compact li.option img.cornerX{
+ul.compact li.option input.optName,
+ul.compact li.option div.optDetails,
+ul.compact li.option img.cornerX{    /*make elements invisible for comapct view */
     display:none;
 }
 
@@ -427,8 +427,43 @@ ul.compact li.option img.icon:hover{
 	margin:7px;
 }
 
-/* p.infeasibleList-header{
-    font-size:20px;
-    text-align:center;
+div.yes-no{
+    height:40px;
+    width:40px;
+    margin:7px;
+    border-radius:10px;
+    background-color:white;
+	border:2px solid black;
+    float:right;
 }
-*/
+
+div.yes-no:hover{
+	border-width:3px;
+	margin:6px;
+}
+
+li.option.state-yes div.yes-no{
+    background-color:green;
+}
+
+li.option.state-no div.yes-no{
+    background-color:red;
+}
+
+ul.compact li.option div.yes-no{
+    display:none;
+}
+
+ul.compact li.option.state-yes img.icon{
+    margin:5px;
+    border:4px solid green;
+}
+
+ul.compact li.option.state-no img.icon{
+    margin:5px;
+    border:4px solid red;
+}
+
+div#infeasible-editor div.option-bank-container img.cornerX{
+    display:none;
+}

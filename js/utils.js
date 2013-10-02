@@ -86,8 +86,9 @@
         };
         
         if (utils.semverCompare(parsedFile.version,"0.1.2") == 1){
-            parsedFile.infeasibles = [];
-            parsedFile.mutexes = [];
+            console.log("updating file to 0.1.2 format");
+            parsedFile.infeasibles = parsedFile.infeasibles || [];
+            parsedFile.mutexes = parsedFile.mutexes || [];
         }
         
         return parsedFile

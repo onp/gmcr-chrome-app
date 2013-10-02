@@ -33,6 +33,7 @@
             if (owner && owner.isState){
                 var $option = $(templates.optionTemplateYN);
                 $option.data("ynWrapper", ynWrapper);
+                $option.addClass(ynWrapper.yn ? "state-yes":"state-no");
             }else{
                 var $option = $(templates.optionTemplateEdit);
             }
@@ -79,6 +80,12 @@
                                    .match(/images\/option\_icons\/([.\w]+)/)[1];
                 _opt.updateViews();
             });
+            
+            $option.children('div.yes-no').click(function(){
+                ynWrapper.yn = !ynWrapper.yn;
+                $option.removeClass("state-yes state-no").addClass(ynWrapper.yn ? "state-yes":"state-no");
+            });
+            
             this.views.push($option);
             if (_opt.views.length==1){
                 _opt.views[0].addClass("unused")
@@ -98,10 +105,6 @@
             return $option
         }
     };
-    
-    var OptionYesNoWrapper = function(optionYNdata){
-        
-    };
         
     var DMObj = function(conflict,dmData){
         var _conf = conflict;
@@ -117,6 +120,10 @@
             this.options = $.map(dmData.options,function(opt){
                 return _conf.options[opt]
             });
+        };
+        
+        this.addOption = function(option){
+            this.options.push(option);
         };
         
         this.updateView = function(){
@@ -151,11 +158,11 @@
             this.options = [];
         }else{
             this.name = infeasibleData.name;
-            this.options = $.map(infeasibleData.options,function(opt){
-                var state  = {};
-                state.option = _conf.options[opt.option];
-                state.yn = opt.yn;
-                return _conf.options[opt]
+            this.options = $.map(infeasibleData.state,function(opt){
+                var ynWrap  = {};
+                ynWrap.option = _conf.options[opt.option];
+                ynWrap.yn = opt.yn;
+                return ynWrap
             });
         };
         
@@ -171,6 +178,19 @@
             return -1;
         };
         
+        this.addOption = function(option,yesNo){
+            if (yesNo != undefined){
+                _inf.options.push(yesNo);
+                return yesNo
+            }else{
+                var state  = {};
+                state.option = option;
+                state.yn = true;
+                _inf.options.push(state);
+                return state
+            };
+        };
+        
         this.updateView = function(){
             this.view.find('input.owner-name').val(_inf.name);
         };
@@ -181,13 +201,15 @@
         };
         
         this.removeFromConflict = function(){
-            _conf.infeasibles.splice(_conf.infeasibles.indexOf(_inf),1);
+            if (_conf.infeasibles.indexOf(_inf) != -1){
+                _conf.infeasibles.splice(_conf.infeasibles.indexOf(_inf),1);
+            };
         }
         
         this.toJSON = function(){
             var stateRep = $.map(_inf.options,function(opt){
                 var state = {};
-                state.option = opt.index;
+                state.option = opt.option.index;
                 state.yn = opt.yn;
                 return state
             });
@@ -209,10 +231,10 @@
         }else{
             this.name = mutexData.name;
             this.options = $.map(mutexData.state,function(opt){
-                var state  = {};
-                state.option = _conf.options[opt.option];
-                state.yn = opt.yn;
-                return _conf.options[opt]
+                var ynWrap  = {};
+                ynWrap.option = _conf.options[opt.option];
+                ynWrap.yn = opt.yn;
+                return ynWrap
             });
         };
         
@@ -228,6 +250,19 @@
             return -1;
         };
         
+        this.addOption = function(option,yesNo){
+            if (yesNo != undefined){
+                _mutex.options.push(yesNo);
+                return yesNo
+            }else{
+                var state  = {};
+                state.option = option;
+                state.yn = true;
+                _mutex.options.push(state);
+                return state
+            };
+        };
+        
         this.updateView = function(){
             this.view.find('input.owner-name').val(_mutex.name);
         };
@@ -238,13 +273,15 @@
         };
         
         this.removeFromConflict = function(){
-            _conf.mutexes.splice(_conf.infeasibles.indexOf(_mutex),1);
-        }
+            if (_conf.mutexes.indexOf(_mutex) != -1){
+                _conf.mutexes.splice(_conf.mutexes.indexOf(_mutex),1);
+            };
+        };
         
         this.toJSON = function(){
             var stateRep = $.map(_mutex.options,function(opt){
                 var state = {};
-                state.option = opt.index;
+                state.option = opt.option.index;
                 state.yn = opt.yn;
                 return state
             });
@@ -358,7 +395,6 @@
             $mutexList.find("li.addMutex").appendTo($mutexList)
                     .on("click",function(){		        //activate "add Mutex" button
                         var newMutex = _conf.newMutex()
-                        console.log(newMutex);
                         $(this).before(newMutex.renderMutex());
                         _conf.makeOptionsSortable();
                     });
@@ -396,18 +432,14 @@
                         }else{
                             $sortTargetHack.remove();
                         };
-                        utils.notify("A decision maker may not have multiple references to the same option");
+                        utils.notify("An entity may not have multiple references to the same option");
                     }else{ //if the option is NOT in the receiving list (normal case).
-                        var $copy = ui.item.data("option").renderOption(newOwner);
-                        newOwner.options.push(ui.item.data("option"));
+                        var yesNo = newOwner.addOption(ui.item.data("option"),ui.item.data("ynWrapper"));
+                        var $copy = ui.item.data("option").renderOption(newOwner,yesNo);
                         $sortTargetHack.after($copy);
                         if ($sortTargetHack.data("owner") != undefined){
-                            console.log($sortTargetHack.data("owner"));
-                            console.log("has Owner");
                             $sortTargetHack.trigger("drop-entry");
                         }else{
-                            console.log($sortTargetHack.data("owner"));
-                            console.log("no owner");
                             $sortTargetHack.remove();
                         }
                     };
@@ -465,6 +497,7 @@
 
             return {"options":this.options,"decisionMakers":this.decisionMakers,
                     "title":this.title,"description":this.description,
+                    "infeasibles":this.infeasibles,"mutexes":this.mutexes,
                     "version":utils.getVersion()};
         };
     };

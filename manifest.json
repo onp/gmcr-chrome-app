@@ -1,7 +1,7 @@
 {
     "name":"GMCR",
     "description":"Decision Support System implementing the Graph Model for Conflict Resolution",
-    "version": "0.1.1",
+    "version": "0.2",
     "manifest_version":2,
     "permissions":[
         {"fileSystem":["write"]}

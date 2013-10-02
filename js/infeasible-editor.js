@@ -21,6 +21,10 @@
         });
         
         
+        $("div.infeasible-list-container,div.mutex-list-container").on("click","img.cornerX",function(e){		//activate "remove" x's
+            $(this).parent().trigger("drop-entry");
+        });
+        
     };
     
     

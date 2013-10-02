@@ -192,6 +192,10 @@ div.dm-list-container{
     margin-right:10px;
 }
 
+div.dm-list{
+    width:100%;
+}
+
 form.optionOwner{
 	position:relative;
 	margin-bottom:10px;
@@ -264,13 +268,11 @@ p.list-title{
 .option-list{
 	margin:5px;
 	padding:5px;
-	padding-bottom:1px;
 	position:relative;
 	width:300px;
 	background-color:beige;
     min-height:60px;
 }
-
 
 li.option {
 	height:60px;
@@ -280,22 +282,31 @@ li.option {
 	position:relative;
 }
 
+li.option:last-of-type{
+    margin-bottom:0px;
+}
+
+li.option:last-of-type::after{
+    content:"";
+    clear:both; /*clear floats for floated options */
+}
+
 li.option.unused{
     background-color:pink;
 }
 
-li.addOpt {
+div.addOpt {
 	height:18px;
-	width:288px;
+	width:298px;
 	padding:5px;
-	margin-bottom:5px;
+	margin:5px;
 	background-color:limeGreen;
 	border:1px limeGreen solid;
 	position:relative;
 	text-align:center;
 }
 
-li.addOpt:hover {
+div.addOpt:hover {
 	border:1px black solid;
 }
 
@@ -392,14 +403,6 @@ img.iconPicker{
 img.iconPicker:hover{
 	border:3px solid black;
 	margin:1.5px;
-}
-
-ul.compact li.addOpt{
-    visibility:hidden;
-    height:0px;
-    margin:0px;
-    padding:0px;
-    clear:both;
 }
 
 ul.compact li.option{

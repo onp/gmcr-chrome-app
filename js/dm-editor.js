@@ -19,7 +19,7 @@
         conflict.makeOptionsSortable();
         
 
-        $("ul.dmList").sortable({connectWith: "ul.dmList",
+        $("ul.dm-list").sortable({connectWith: "ul.dm-list",
                                  items:"> form:not(.addDM)"});		//make lists sortable
                                  
         $("div.dm-list-container").on("sortreceive","ul.option-list",function(){

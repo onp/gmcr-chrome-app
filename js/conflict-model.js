@@ -28,9 +28,15 @@
             });
         };
         
-        this.renderOption = function(owner){
+        this.renderOption = function(owner,ynWrapper){
             //returns a jquery object containing the rendered option, established the appropriate references and handlers.
-            var $option = $(templates.optionTemplate);
+            if (owner && owner.isState){
+                var $option = $(templates.optionTemplateYN);
+                $option.data("ynWrapper", ynWrapper);
+            }else{
+                var $option = $(templates.optionTemplateEdit);
+            }
+
             $option.data("owner", owner);
             $option.data("option",_opt);
             $option.data("conflict",_conf);
@@ -92,6 +98,10 @@
             return $option
         }
     };
+    
+    var OptionYesNoWrapper = function(optionYNdata){
+        
+    };
         
     var DMObj = function(conflict,dmData){
         var _conf = conflict;
@@ -133,6 +143,7 @@
         var _conf = conflict;
         var _inf = this;
         this.view = undefined;
+        this.isState = true;
         this.template = templates.infeasibleTemplate;
         
         if (typeof infeasibleData === "undefined"){
@@ -141,8 +152,23 @@
         }else{
             this.name = infeasibleData.name;
             this.options = $.map(infeasibleData.options,function(opt){
+                var state  = {};
+                state.option = _conf.options[opt.option];
+                state.yn = opt.yn;
                 return _conf.options[opt]
             });
+        };
+        
+        this.options.indexOf = function(searchElement,fromIndex){
+            var index = fromIndex || 0;
+            
+            for (;index < this.length;index++){
+                if (this[index].option === searchElement){
+                    return index;
+                };
+            };
+            
+            return -1;
         };
         
         this.updateView = function(){
@@ -159,16 +185,22 @@
         }
         
         this.toJSON = function(){
-            return {"name":this.name,
-                    "options":$.map(_inf.options,function(opt){return opt.index})
-            };
+            var stateRep = $.map(_inf.options,function(opt){
+                var state = {};
+                state.option = opt.index;
+                state.yn = opt.yn;
+                return state
+            });
+        
+            return { "name":this.name, "state": stateRep };
         };
     };
-    
+
     var MutexObj = function(conflict,mutexData){
         var _conf = conflict;
         var _mutex = this;
         this.view = undefined;
+        this.isState = true;
         this.template = templates.infeasibleTemplate;
         
         if (typeof mutexData === "undefined"){
@@ -176,9 +208,24 @@
             this.options = [];
         }else{
             this.name = mutexData.name;
-            this.options = $.map(mutexData.options,function(opt){
+            this.options = $.map(mutexData.state,function(opt){
+                var state  = {};
+                state.option = _conf.options[opt.option];
+                state.yn = opt.yn;
                 return _conf.options[opt]
             });
+        };
+        
+        this.options.indexOf = function(searchElement,fromIndex){
+            var index = fromIndex || 0;
+            
+            for (;index < this.length;index++){
+                if (this[index].option === searchElement){
+                    return index;
+                };
+            };
+            
+            return -1;
         };
         
         this.updateView = function(){
@@ -195,9 +242,14 @@
         }
         
         this.toJSON = function(){
-            return {"name":this.name,
-                    "options":$.map(_mutex.options,function(opt){return opt.index})
-            };
+            var stateRep = $.map(_mutex.options,function(opt){
+                var state = {};
+                state.option = opt.index;
+                state.yn = opt.yn;
+                return state
+            });
+        
+            return { "name":this.name, "state": stateRep };
         };
     };
     
@@ -212,17 +264,19 @@
         });
         
         $.each(owner.options,function(){
-            $list.find("ul.option-list").append(this.renderOption(owner));
+            if (owner.isState == true){
+                $list.find("ul.option-list").append(this.option.renderOption(owner,this));
+            }else{
+                $list.find("ul.option-list").append(this.renderOption(owner));
+            };
         });
         
-        $list.find(".addOpt").appendTo($list.find("ul.option-list"));
-        
-        $list.find("li.addOpt").on("click",function(){		//activate "add Option" button
+        $list.find("div.addOpt").on("click",function(){		//activate "add Option" button
             newOpt = conf.newOption(owner);
             owner.options.push(newOpt);
-            $(this).before(newOpt.renderOption(owner));
+            $list.find("ul.option-list").append(newOpt.renderOption(owner));
         });
-        
+
         $list.on('drop-entry',function(e){
             owner.view = undefined;
             owner.removeFromConflict()
@@ -240,7 +294,6 @@
         return $list;
     };
     
-    //add renderMutexList and renderInfeasList to ConflictObj
         
     conflictModels.ConflictObj = function(conflictData){
         var _conf = this

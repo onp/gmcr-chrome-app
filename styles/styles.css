@@ -1,5 +1,4 @@
 html{
-    height:100%;
     overflow-y:auto;
 }
 
@@ -107,6 +106,12 @@ div#sidebar p.sidebar-button:hover{
     border:1px solid black;
 }
 
+div#sidebar p.sidebar-button.active-screen{
+    padding:4px;
+    border:1px solid black;
+    background-color:deepSkyBlue;
+}
+
 div#sidebar p#button-save{
     background-color:lightGreen;
 }
@@ -192,9 +197,16 @@ textarea.confDesc:hover{
 div.infeasible-list-container,
 div.mutex-list-container,
 div.dm-list-container{
-    min-width:325px;
+    width:325px;
     float:left;
     margin-right:10px;
+}
+
+@media all and (max-width: 1045px){
+    div.infeasible-list-container,
+    div.mutex-list-container{
+        float:none;
+    }
 }
 
 div.dm-list{
@@ -217,7 +229,7 @@ li.addDM {
 	position:relative;
     box-sizing:border-box;
 	margin:0px;
-	margin-bottom:5px;
+	margin-bottom:20px;
 	border:1px solid black;
 	width:100%;
 	height:32px;
@@ -261,7 +273,7 @@ form.optionOwner input.dmName:focus{
 div.option-bank-container{
     border:2px black solid;
     background-color:lightBlue;
-    float:left;
+    float:right;
 }
 
 p.list-title{
@@ -277,6 +289,7 @@ p.list-title{
 	width:300px;
 	background-color:beige;
     min-height:60px;
+    overflow:hidden; /*clear floats for floated options */
 }
 
 li.option {
@@ -289,11 +302,6 @@ li.option {
 
 li.option:last-of-type{
     margin-bottom:0px;
-}
-
-li.option:last-of-type::after{
-    content:"";
-    clear:both; /*clear floats for floated options */
 }
 
 li.option.unused{
@@ -466,4 +474,24 @@ ul.compact li.option.state-no img.icon{
 
 div#infeasible-editor div.option-bank-container img.cornerX{
     display:none;
+}
+
+ul.feasible-state-display{
+	margin:5px;
+	padding:5px;
+	position:relative;
+	width:300px;
+	background-color:beige;
+    min-height:60px;
+    overflow:hidden; /*clear floats for floated states */
+}
+
+li.feasible-state{
+    position:relative;
+    float:left;
+    background-color:lightBlue;
+    border:1px solid blue;
+    height:15px;
+    width:15px;
+    margin:10px;
 }

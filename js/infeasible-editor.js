@@ -2,6 +2,8 @@
 
     gmcr.infeasible = function(){
         $("div#main-content").html(templates.infeasibleEditMain);
+        $("p.sidebar-button").removeClass("active-screen");
+        $("p#button-infeasible").addClass("active-screen");
         
         var conflict = gmcr.active_conflict;
     
@@ -24,6 +26,15 @@
         $("div.infeasible-list-container,div.mutex-list-container").on("click","img.cornerX",function(e){		//activate "remove" x's
             $(this).parent().trigger("drop-entry");
         });
+        
+        $feasList = $("div.option-bank-container").append(templates.feasibleContainer).find("ul.feasible-state-display");
+        
+        for(var i=0;i < Math.pow(2,gmcr.active_conflict.options.length);i++){
+            $feasList.append(templates.feasibleState);
+        };
+            
+        
+        
         
     };
     

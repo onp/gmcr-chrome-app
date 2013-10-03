@@ -6,6 +6,9 @@
         $("div#topbar-content").html(templates.dmEditTop);
         $('#sidebar').show();
         
+        $("p.sidebar-button").removeClass("active-screen");
+        $("p#button-dm-editor").addClass("active-screen");
+        
         var $sortTargetHack = "none"; //needed to cope with a jquery draggable issue (acts as a reference holder)
         
         if (confData == "reload"){
